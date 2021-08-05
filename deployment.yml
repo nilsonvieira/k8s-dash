@@ -1,15 +1,16 @@
-kind: Service
 apiVersion: v1
+kind: ServiceAccount
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
-spec:
-  ports:
-    - port: 443
-      targetPort: 8443
-      nodePort: 31843
-  selector:
-    k8s-app: kubernetes-dashboard
-  type: NodePort
+  name: jenkins-token
+  namespace: kube-system
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins-token
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: edit
+  name: kube-system
