@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: jenkins-token
+  name: jenkins-edit
   namespace: kube-system
 
 ---
@@ -9,8 +9,12 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: jenkins-token
+  name: jenkins-edit
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: edit
-  name: kube-system
+  kind: ClusterRole
+  name: edit
+subjects:
+  - kind: ServiceAccount
+    name: jenkins-edit
+    namespace: kube-system
